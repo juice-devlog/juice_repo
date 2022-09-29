@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int const MX = 1000005;
+const int MX = 1000005;
 char    dat[MX];
 int pre[MX], nxt[MX];
 int unused = 1;
