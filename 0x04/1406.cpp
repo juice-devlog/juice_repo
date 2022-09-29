@@ -19,15 +19,15 @@ void	ft_insert(int addr, char c)
 	dat[unused] = c;
 	pre[unused] = addr;
 	nxt[unused] = nxt[addr];
-	nxt[addr] = unused;
 	pre[nxt[addr]] = unused;
+	nxt[addr] = unused;
 	unused++;
 }
 
 void traverse(){
   int cur = nxt[0];
   while(cur != -1){
-    cout << dat[cur] << ' ';
+    cout << dat[cur];
     cur = nxt[cur];
   }
   cout << "\n\n";
@@ -48,16 +48,18 @@ int main()
 	cin >> m;
 	for(int i = 0; i < m; i++){
 		cin >> command;
-		if(command == 'L' && cursor >= 0)
-			cursor--;
-		else if(command == 'D' && dat[cursor])
-			cursor++;
-		else if(command == 'B' && cursor >= 1)
+		if(command == 'L' && pre[cursor] != -1)
+			cursor = pre[cursor];
+		else if(command == 'D' && nxt[cursor] != -1)
+			cursor = nxt[cursor];
+		else if(command == 'B' && pre[cursor] != -1){
 			ft_erase(cursor);
+			cursor = pre[cursor];
+		}
 		else if(command == 'P'){
 			cin >> c;
 			ft_insert(cursor, c);
-			cursor++;
+			cursor = nxt[cursor];
 		}
 		else
 			continue;
