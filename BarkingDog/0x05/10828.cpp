@@ -27,10 +27,9 @@ int main(void)
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    int n;
+    int n, val;
     cin >> n;
     string    command;
-    int val;
     for (int i = 0; i < n; i++){
         cin >> command;
         if (command == "push"){

@@ -40,27 +40,31 @@ int main()
     cin.tie(0);
     int num;
     cin >> num;
-    string s;
     for(int i = 0; i < num; i++){
         fill(pre, pre + MX, -1);
         fill(nxt, nxt + MX, -1);
+        string s;
         cin >> s;
         int cursor = 0;
-        for (int i = 0; s[i]; i++){
-            if (s[i] == '-' && pre[cursor] != -1){
-                erase(cursor);
-                cursor = pre[cursor];
+        for (int i = 0; s[i] != 0; i++){
+            if (s[i] == '-'){
+                if (pre[cursor] != -1){
+                    erase(cursor);
+                    cursor = pre[cursor];
+                }
             }
-            else if (s[i] == '<' && pre[cursor] != -1)
-                cursor = pre[cursor];
-            else if (s[i] == '>' && nxt[cursor] != -1)
-                cursor = nxt[cursor];
-            else if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= '0' && s[i] <= '9')){
+            else if (s[i] == '<'){
+                if (pre[cursor] != -1)
+                    cursor = pre[cursor];
+            }
+            else if (s[i] == '>'){
+                if (nxt[cursor] != -1)
+                    cursor = nxt[cursor];
+            }
+            else {
                 insert(cursor, s[i]);
                 cursor = nxt[cursor];
             }
-            else
-                continue;
         }
         traverse();
     }

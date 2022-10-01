@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int arr[100000];
-int occur[2000000];
+int arr[100005];
+int occur[2000005];
+
 int main()
 {
     ios::sync_with_stdio(0);
@@ -14,9 +15,9 @@ int main()
     cin >> x;
     count = 0;
     for (int i = 0; i < n; i++){
-        if (occur[x - arr[i]] == 1)
+        if ((x - arr[i]) > 0 && occur[x - arr[i]] == 1)
             count++;
-        occur[arr[i]]++;
+        occur[arr[i]] = 1;
     }
     cout << count;
 }
