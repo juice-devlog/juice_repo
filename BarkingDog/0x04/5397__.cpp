@@ -49,8 +49,8 @@ int main()
         for (int i = 0; s[i] != 0; i++){
             if (s[i] == '-'){
                 if (pre[cursor] != -1){
-                    erase(cursor);
                     cursor = pre[cursor];
+                    erase(cursor);
                 }
             }
             else if (s[i] == '<'){
