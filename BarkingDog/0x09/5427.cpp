@@ -50,13 +50,13 @@ int main(void){
             for(int dir = 0; dir < 4; dir++){
                 int nx = cur.X + dx[dir];
                 int ny = cur.Y + dy[dir];
+                if(sang[cur.X][cur.Y] > fire[nx][ny]) continue;
                 if(nx < 0 || nx >= h || ny < 0 || ny >= w) {
                     cout << sang[cur.X][cur.Y] + 1 << '\n';
                     escape = true;
                     break;
                 }
                 if(sang[nx][ny] != -1 || building[nx][ny] != '.') continue;
-                if(sang[cur.X][cur.Y] > fire[nx][ny]) continue;
                 sang[nx][ny] = sang[cur.X][cur.Y] + 1;
                 Qs.push({nx, ny});
             }
