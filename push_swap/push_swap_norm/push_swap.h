@@ -51,6 +51,7 @@ void	rra(t_stack *a);
 void	rrb(t_stack *b);
 void	rrr(t_stack *a, t_stack *b);
 
+void	start_sorting(t_stack *a, t_stack *b, int count);
 void	a_to_b(t_stack *a, t_stack *b, int count);
 void	b_to_a(t_stack *a, t_stack *b, int count);
 int		is_a_sorted(t_stack *a, int count);
