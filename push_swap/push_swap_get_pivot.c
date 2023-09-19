@@ -33,7 +33,7 @@ void	quick_sort(int *arr, int start, int end)
 	quick_sort(arr, search_large + 1, end);
 }
 
-int	get_small_pivot(t_stack *s, int count)
+void	get_pivot(t_stack *s, int count, int *pivot_small_large)
 {
 	int *arr;
 	t_node *cur;
@@ -48,23 +48,24 @@ int	get_small_pivot(t_stack *s, int count)
 		cur = cur->next;
 	}
 	quick_sort(arr, 0, count - 1);
-	return (arr[count / 3]);
+	pivot_small_large[0] = arr[count / 3];
+	pivot_small_large[1] = arr[count / 3 * 2];
 }
 
-int get_large_pivot(t_stack *s, int count)
-{
-	int *arr;
-	t_node *cur;
-	int i;
+// int get_large_pivot(t_stack *s, int count)
+// {
+// 	int *arr;
+// 	t_node *cur;
+// 	int i;
 
-	i = -1;
-	arr = (int *)malloc(sizeof(int) * count);
-	cur = s->top;
-	while (++i < count)
-	{
-		arr[i] = cur->data;
-		cur = cur->next;
-	}
-	quick_sort(arr, 0, count - 1);
-	return (arr[count / 3 * 2]);
-}
+// 	i = -1;
+// 	arr = (int *)malloc(sizeof(int) * count);
+// 	cur = s->top;
+// 	while (++i < count)
+// 	{
+// 		arr[i] = cur->data;
+// 		cur = cur->next;
+// 	}
+// 	quick_sort(arr, 0, count - 1);
+// 	return (arr[count / 3 * 2]);
+// }

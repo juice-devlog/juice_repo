@@ -19,12 +19,6 @@ void sort_a_only_three(t_stack *a)
 			rra(a);
 	}
 }
-// 123
-// 132 sa ra 312
-// 213 sa
-// 231 rra
-// 312 ra
-// 321 ra sa 213
 
 void	sort_b_only_three(t_stack *b)
 {
@@ -46,12 +40,6 @@ void	sort_b_only_three(t_stack *b)
 			rrb(b);
 	}
 }
-// 123 sb rrb 213
-// 132 rb
-// 213 rrb
-// 231 sb
-// 312 sb rb 132
-// 321 
 
 int check_sorted(t_stack *a)
 {
