@@ -51,14 +51,17 @@ void	rra(t_stack *a);
 void	rrb(t_stack *b);
 void	rrr(t_stack *a, t_stack *b);
 
+void	start_sorting(t_stack *a, t_stack *b, int count);
 void	a_to_b(t_stack *a, t_stack *b, int count);
 void	b_to_a(t_stack *a, t_stack *b, int count);
-int		is_a_sorted(t_stack *a, int count);
-int		is_b_sorted(t_stack *b, int count);
+int	is_sorted(t_stack *s, char stack, int count);
 void	sort_a_under_three(t_stack *a, int count);
 void	sort_b_under_three(t_stack *b, int count);
 void	quick_sort(int *arr, int start, int end);
 int		get_small_pivot(t_stack *s, int count);
 int		get_large_pivot(t_stack *s, int count);
+void sort_a_only_three(t_stack *a);
+void	sort_b_only_three(t_stack *b);
+int check_sorted(t_stack *a);
 
 #endif
