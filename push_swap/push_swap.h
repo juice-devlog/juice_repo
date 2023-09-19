@@ -28,9 +28,10 @@ typedef struct s_stack{
 
 void	display_error(void);
 void	free_on_parse_error(int *arr, char **numbers);
-int		check_atoi(int *arr, char **numbers, int idx);
+void check_int(long long res, int i, int *arr, char **numbers);
+int check_atoi(int *arr, char **numbers, int idx);
 void	init_array(int *arr, char **argv);
-int		*parse_arg(int argc, char **argv, int *num_cnt);
+int		*parse_arg(char **argv, int *num_cnt);
 int		count_word(char const *s, char c);
 char	*put_word(char const *s, char c);
 void	free2(char **str);

@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 19:29:04 by jooypark          #+#    #+#             */
-/*   Updated: 2023/09/08 23:24:04 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/09/20 07:16:45 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	**ft_split(char const *s, char c)
 	return (words);
 }
 
-void	check_int(long long res, int i, int *arr, int idx, char **numbers)
+void	check_int(long long res, int i, int *arr, char **numbers)
 {
 	if ((res == 0 && i != 1) || (i >= 11)
 		|| (res < -2147483648 || res > 2147483647))
@@ -143,5 +143,5 @@ int	check_atoi(int *arr, char **numbers, int idx)
 	// if ((res == 0 && i != 1) || (i >= 11)
 	// 	|| (res < -2147483648 || res > 2147483647))
 	// 	free_on_parse_error(arr, numbers);
-	return (check_int(res, i, arr, idx, numbers), (int)res);
+	return (check_int(res, i, arr, numbers), (int)res);
 }

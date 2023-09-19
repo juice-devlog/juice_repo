@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 21:23:58 by jooypark          #+#    #+#             */
-/*   Updated: 2023/09/20 04:19:51 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/09/20 07:17:56 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		exit(0);
-	arr = parse_arg(argc, argv, &num_cnt);
+	arr = parse_arg(argv, &num_cnt);
 	a = init_stack_a(arr, num_cnt);
 	b = init_stack_b();
 	if (!check_sorted(a))

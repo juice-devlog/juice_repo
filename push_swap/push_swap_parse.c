@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 21:23:46 by jooypark          #+#    #+#             */
-/*   Updated: 2023/09/08 23:06:58 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/09/20 07:17:40 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_array(int *arr, char **argv)
 	}
 }
 
-int	*parse_arg(int argc, char **argv, int *num_cnt)
+int	*parse_arg(char **argv, int *num_cnt)
 {
 	int			i;
 	int			*arr;
