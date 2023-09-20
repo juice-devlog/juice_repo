@@ -33,7 +33,7 @@ void	b_to_a(t_stack *a, t_stack *b, int count)
 			pa(a, b);
 		return ;
 	}
-	get_pivot(a, count, pivot_small_large);
+	get_pivot(b, count, pivot_small_large);
 	count_pa_ra_rb[0] = 0;
 	count_pa_ra_rb[1] = 0;
 	count_pa_ra_rb[2] = 0;
@@ -63,6 +63,6 @@ void	a_to_b(t_stack *a, t_stack *b, int count)
 		a_to_b_while(a, b, &count, pivot_small_large, count_pb_ra_rb);
 	merge_rra_rrb_count(a, b, count_pb_ra_rb[1], count_pb_ra_rb[2]);
 	a_to_b(a, b, count_pb_ra_rb[1]);
-	b_to_a(a, b, count_pb_ra_rb[0] - count_pb_ra_rb[2]);
 	b_to_a(a, b, count_pb_ra_rb[2]);
+	b_to_a(a, b, count_pb_ra_rb[0] - count_pb_ra_rb[2]);
 }

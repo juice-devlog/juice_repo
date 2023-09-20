@@ -68,4 +68,6 @@ void sort_a_only_three(t_stack *a);
 void	sort_b_only_three(t_stack *b);
 int check_sorted(t_stack *a);
 
+void print_ab(t_stack *a, t_stack *b);
+
 #endif

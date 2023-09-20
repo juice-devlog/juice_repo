@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 21:23:58 by jooypark          #+#    #+#             */
-/*   Updated: 2023/09/20 07:17:56 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/09/20 23:35:56 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ int	main(int argc, char **argv)
 	b = init_stack_b();
 	if (!check_sorted(a))
 		start_sorting(a, b, num_cnt);
-	printf("final a: ");
-	t_node *cur = a->top;
-	while (cur)
-	{
-		printf("%d->", cur->data);
-		cur = cur->next;
-	}
-	printf("\nfinal b: ");
-	cur = b->top;
-	while (cur)
-	{
-		printf("%d->", cur->data);
-		cur = cur->next;
-	}
-	printf("\n");
+	// printf("final a: ");
+	// t_node *cur = a->top;
+	// while (cur)
+	// {
+	// 	printf("%d->", cur->data);
+	// 	cur = cur->next;
+	// }
+	// printf("\nfinal b: ");
+	// cur = b->top;
+	// while (cur)
+	// {
+	// 	printf("%d->", cur->data);
+	// 	cur = cur->next;
+	// }
+	// printf("\n");
 }

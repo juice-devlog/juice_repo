@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 19:29:04 by jooypark          #+#    #+#             */
-/*   Updated: 2023/09/20 12:04:43 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/09/20 13:50:39 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,6 @@ int	check_atoi(int *arr, char **numbers, int idx)
 		else
 			free_on_parse_error(arr, numbers);
 	}
+	res *= sign;
 	return (check_int(res*sign, i, arr, numbers), (int)res);
 }

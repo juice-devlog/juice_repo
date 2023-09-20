@@ -104,6 +104,8 @@ void	merge_rra_rrb_count(t_stack *a, t_stack *b, int ra_count, int rb_count)
 		while (++i < ra_count)
 			rrr(a, b);
 		while (++i <= rb_count)
+		{
 			rrb(b);
+		}
 	}
 }

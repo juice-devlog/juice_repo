@@ -8,6 +8,7 @@ void sort_a_only_three(t_stack *a)
 
 	while (!(is_sorted(a, 'a', 3)))
 	{
+				//exit(1);
 		n1 = a->top->data;
 		n2 = a->top->next->data;
 		n3 = a->top->next->next->data;
@@ -28,6 +29,8 @@ void	sort_b_only_three(t_stack *b)
 
 	while (!(is_sorted(b, 'b', 3)))
 	{
+		//exit(1);
+
 		n1 = b->top->data;
 		n2 = b->top->next->data;
 		n3 = b->top->next->next->data;
