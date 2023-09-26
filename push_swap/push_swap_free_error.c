@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_swap_free_error.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/01 21:23:58 by jooypark          #+#    #+#             */
-/*   Updated: 2023/09/24 10:39:52 by jooypark         ###   ########seoul.kr  */
+/*   Created: 2023/09/24 08:34:30 by jooypark          #+#    #+#             */
+/*   Updated: 2023/09/24 08:36:53 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+void	display_error(int *arr, char *num)
 {
-	int		*arr;
-	int		num_cnt;
-	t_stack	*a;
-	t_stack	*b;
+	if (arr)
+		free(arr);
+	if (num)
+		free(num);
+	write(2, "Error\n", 6);
+	exit(1);
+}
 
-	if (argc < 2)
-		exit(0);
-	arr = parse_arg(argv, &num_cnt);
-	a = init_stack_a(arr, num_cnt);
-	b = init_stack_b();
-	if (!is_sorted(a, 'a', num_cnt))
-		start_sorting(a, b, num_cnt);
-	free_stack(a, b);
+void	free_stack(t_stack *a, t_stack *b)
+{
+	t_node	*cur;
+	t_node	*next;
+
+	cur = a->top;
+	while (cur)
+	{
+		next = cur->next;
+		free(cur);
+		cur = next;
+	}
+	free(a);
+	free(b);
 }
