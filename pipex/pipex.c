@@ -28,7 +28,11 @@ void pipex(int infile, int outfile, t_cmd cmd, char **envp)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(infile);
-		execve(cmd.cmd1_path, cmd.cmd1, envp);
+		if (execve(cmd.cmd1_path, cmd.cmd1, envp) == -1)
+		{
+			strerror(127);
+			exit(127);
+		}
 	}
 	else
 	{
@@ -37,8 +41,13 @@ void pipex(int infile, int outfile, t_cmd cmd, char **envp)
 		dup2(outfile, STDOUT_FILENO);
 		close(fd[1]);
 		close(outfile);
-		execve(cmd.cmd2_path, cmd.cmd2, envp);
+		if (execve(cmd.cmd2_path, cmd.cmd2, envp) == -1)
+		{
+			strerror(127);
+			exit(127);
+		}
 	}
+
 }
 
 char *find_path(char *cmd, char **paths)
@@ -61,7 +70,7 @@ char *find_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-int parse_env(char **av, char **envp, t_cmd *cmd)
+void parse_env(char **av, char **envp, t_cmd *cmd)
 {
 	int	i;
 	char **paths;
@@ -91,8 +100,15 @@ int main(int ac, char **av, char **envp)
 	infile = open(av[1], O_RDONLY);
 	outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (infile < 0 || outfile < 0)
-		return (-1);
+	{
+		perror("FILE ERROR");
+		exit(0);
+	}
 	parse_env(av, envp, &cmd);
 	pipex(infile, outfile, cmd, envp);
+
+	exit(1);
+	printf("awd\n");
+	write(1, "123", 3);
 	return (0);
 }
