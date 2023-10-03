@@ -3,3 +3,4 @@ world
 this
 is
 pipex
+test infile

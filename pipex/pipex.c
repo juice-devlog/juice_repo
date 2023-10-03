@@ -12,49 +12,37 @@
 
 #include "pipex.h"
 
-void pipex(int infile, int outfile, t_cmd cmd, char **envp)
+void	pipex(int infile, int outfile, t_cmd *cmd, char **envp)
 {
-	int fd[2];
-	pid_t pid;
+	int		fd[2];
+	pid_t	pid;
+	int		i;
 
-	if(pipe(fd) == -1)
-		return ;
-	pid = fork();
-	if (pid < 0)
-		return ;
-	if (!pid)
+	i = 0;
+	while (i < 2)
 	{
-		dup2(infile, STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(infile);
-		if (execve(cmd.cmd1_path, cmd.cmd1, envp) == -1)
+		create_process(fd, &pid);
+		if (!pid && i == 0)
 		{
-			strerror(127);
-			exit(127);
+			input_redirection(infile, fd);
+			execute_command(cmd->cmd1, cmd->cmd1_path, envp);
 		}
-	}
-	else
-	{
-		wait(NULL);
-		dup2(fd[0], STDIN_FILENO);
-		dup2(outfile, STDOUT_FILENO);
-		close(fd[1]);
-		close(outfile);
-		if (execve(cmd.cmd2_path, cmd.cmd2, envp) == -1)
+		else if (!pid && i == 1)
 		{
-			strerror(127);
-			exit(127);
+			output_redirection(outfile, fd);
+			execute_command(cmd->cmd2, cmd->cmd2_path, envp);
 		}
+		else
+			parent_process(fd);
+		i++;
 	}
-
 }
 
-char *find_path(char *cmd, char **paths)
+char	*find_path(char *cmd, char **paths)
 {
-	int i;
-	char *cmd_with_slash;
-	char *cmd_path;
+	int		i;
+	char	*cmd_with_slash;
+	char	*cmd_path;
 
 	i = 0;
 	while (paths[i])
@@ -70,23 +58,28 @@ char *find_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-void parse_env(char **av, char **envp, t_cmd *cmd)
+void	parse_env(char **av, char **envp, t_cmd *cmd)
 {
-	int	i;
-	char **paths;
+	int		i;
+	char	**paths;
 
 	i = 0;
 	while (ft_strncmp(envp[i], "PATH", 4) != 0)
 		i++;
 	paths = ft_split(envp[i], ':');
 	cmd->cmd1 = ft_split(av[2], ' ');
-	cmd->cmd2 = ft_split(av[3], ' ');
 	cmd->cmd1_path = find_path(cmd->cmd1[0], paths);
+	cmd->cmd2 = ft_split(av[3], ' ');
 	cmd->cmd2_path = find_path(cmd->cmd2[0], paths);
 	i = -1;
 	while (paths[++i])
 		free(paths[i]);
 	free(paths);
+}
+
+void cl()
+{
+	system("leaks pipex");
 }
 
 int main(int ac, char **av, char **envp)
@@ -95,6 +88,7 @@ int main(int ac, char **av, char **envp)
 	int outfile;
 	t_cmd cmd;
 
+	atexit(cl);
 	if (ac != 5)
 		return (-1);
 	infile = open(av[1], O_RDONLY);
@@ -105,10 +99,7 @@ int main(int ac, char **av, char **envp)
 		exit(0);
 	}
 	parse_env(av, envp, &cmd);
-	pipex(infile, outfile, cmd, envp);
-
-	exit(1);
-	printf("awd\n");
-	write(1, "123", 3);
+	pipex(infile, outfile, &cmd, envp);
+	free_cmd(cmd);
 	return (0);
 }
