@@ -18,14 +18,16 @@ typedef struct s_cmd
 
 }	t_cmd;
 
-char	*find_path(char *cmd, char **paths);
+char	*find_path(char **cmd, char **paths);
 void	parse_env(char **av, char **envp, t_cmd *info);
 void	pipex(int infile, int outfile, t_cmd *info, char **envp);
 
-void	create_process(int *fd, pid_t *pid);
-void	input_redirection(int infile, int *fd);
-void	output_redirection(int outfile, int *fd);
-void	execute_command(char **cmd, char *cmd_path, char **envp);
-void	parent_process(int *fd);
+void first_child_process(int infile, int *fd, t_cmd *cmd, char **envp);
+void second_child_process(int outfile, int *fd, t_cmd *cmd, char **envp);
+
+void free_cmd(t_cmd *cmd);
+int print_error_msg(char *msg);
+void handle_error(char *msg);
+void handle_process_error(t_cmd *cmd, char *msg);
 
 #endif

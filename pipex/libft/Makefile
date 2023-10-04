@@ -36,7 +36,6 @@ SRCS = ft_isalpha.c \
        ft_putendl_fd.c \
        ft_putnbr_fd.c
 OBJS = $(SRCS:.c=.o)
-INCLUDE = libft.h
 
 all: $(NAME)
 
@@ -44,7 +43,7 @@ $(NAME): $(OBJS)
 	ar -rc $@ $(OBJS)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c -o $@ $< -I $(INCLUDE)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJS)

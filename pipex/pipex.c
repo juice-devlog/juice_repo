@@ -16,38 +16,38 @@ void	pipex(int infile, int outfile, t_cmd *cmd, char **envp)
 {
 	int		fd[2];
 	pid_t	pid;
-	int		i;
 
-	i = 0;
-	while (i < 2)
-	{
-		create_process(fd, &pid);
-		if (!pid && i == 0)
-		{
-			input_redirection(infile, fd);
-			execute_command(cmd->cmd1, cmd->cmd1_path, envp);
-		}
-		else if (!pid && i == 1)
-		{
-			output_redirection(outfile, fd);
-			execute_command(cmd->cmd2, cmd->cmd2_path, envp);
-		}
-		else
-			parent_process(fd);
-		i++;
-	}
+	if (pipe(fd) == -1)
+		handle_error("PIPE ERROR");
+	pid = fork();
+	if (pid < 0)
+		handle_error("FORK ERROR");
+	else if (pid == 0)
+		first_child_process(infile, fd, cmd, envp);
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
+	pid = fork();
+	if (pid < 0)
+		handle_error("FORK ERROR");
+	else if (pid == 0)
+		second_child_process(outfile, fd, cmd, envp);
+	close(fd[0]);
+	waitpid(pid, NULL, 0);
+	free_cmd(cmd);
 }
 
-char	*find_path(char *cmd, char **paths)
+char	*find_path(char **cmd, char **paths)
 {
 	int		i;
 	char	*cmd_with_slash;
 	char	*cmd_path;
 
+	if (!cmd[0])
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
-		cmd_with_slash = ft_strjoin("/", cmd);
+		cmd_with_slash = ft_strjoin("/", cmd[0]);
 		cmd_path = ft_strjoin(paths[i], cmd_with_slash);
 		free(cmd_with_slash);
 		if (access(cmd_path, X_OK) != -1)
@@ -68,19 +68,19 @@ void	parse_env(char **av, char **envp, t_cmd *cmd)
 		i++;
 	paths = ft_split(envp[i], ':');
 	cmd->cmd1 = ft_split(av[2], ' ');
-	cmd->cmd1_path = find_path(cmd->cmd1[0], paths);
 	cmd->cmd2 = ft_split(av[3], ' ');
-	cmd->cmd2_path = find_path(cmd->cmd2[0], paths);
+	cmd->cmd1_path = find_path(cmd->cmd1, paths);
+	cmd->cmd2_path = find_path(cmd->cmd2, paths);
 	i = -1;
 	while (paths[++i])
 		free(paths[i]);
 	free(paths);
 }
 
-void cl()
-{
-	system("leaks pipex");
-}
+// void cl()
+// {
+// 	system("leaks pipex");
+// }
 
 int main(int ac, char **av, char **envp)
 {
@@ -88,18 +88,14 @@ int main(int ac, char **av, char **envp)
 	int outfile;
 	t_cmd cmd;
 
-	atexit(cl);
+	// atexit(cl);
 	if (ac != 5)
-		return (-1);
+		return (print_error_msg("Invalid number of arguments\n"));
 	infile = open(av[1], O_RDONLY);
 	outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (infile < 0 || outfile < 0)
-	{
-		perror("FILE ERROR");
-		exit(0);
-	}
+		handle_error("FILE ERROR");
 	parse_env(av, envp, &cmd);
 	pipex(infile, outfile, &cmd, envp);
-	free_cmd(cmd);
 	return (0);
 }

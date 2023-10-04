@@ -12,44 +12,32 @@
 
 #include "pipex.h"
 
-void	create_process(int *fd, pid_t *pid)
-{
-	if (pipe(fd) == -1)
-		return ;
-	*pid = fork();
-	if (*pid < 0)
-		return ;
-}
-
-void	input_redirection(int infile, int *fd)
+void	first_child_process(int infile, int *fd, t_cmd *cmd, char **envp)
 {
 	close(fd[0]);
-	dup2(infile, STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
+	if (dup2(infile, STDIN_FILENO) == -1)
+		handle_process_error(cmd, "DUP2 ERROR");
 	close(infile);
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		handle_process_error(cmd, "DUP2 ERROR");
 	close(fd[1]);
+	if (!cmd->cmd1 || !cmd->cmd1_path)
+		handle_process_error(cmd, "COMMAND ERROR");
+	if (execve(cmd->cmd1_path, cmd->cmd1, envp) == -1)
+		handle_process_error(cmd, "EXECUTE ERROR");
 }
 
-void	output_redirection(int outfile, int *fd)
+void second_child_process(int outfile, int *fd, t_cmd *cmd, char **envp)
 {
-	close(fd[0]);
 	close(fd[1]);
-	dup2(outfile, STDOUT_FILENO);
+	if (dup2(fd[0], STDIN_FILENO) == -1)
+		handle_process_error(cmd, "DUP2 ERROR");
+	close(fd[0]);
+	if (dup2(outfile, STDOUT_FILENO) == -1)
+		handle_process_error(cmd, "DUP2 ERROR");
 	close(outfile);
-}
-
-void	execute_command(char **cmd, char *cmd_path, char **envp)
-{
-	if (execve(cmd_path, cmd, envp) == -1)
-	{
-		strerror(127);
-		exit(127);
-	}
-}
-
-void	parent_process(int *fd)
-{
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
+	if (!cmd->cmd2 || !cmd->cmd2_path)
+		handle_process_error(cmd, "COMMAND ERROR");
+	if (execve(cmd->cmd2_path, cmd->cmd2, envp) == -1)
+		handle_process_error(cmd, "EXECUTE ERROR");
 }

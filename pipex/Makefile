@@ -2,7 +2,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS = pipex.c \
-	   pipex_process.c
+	   pipex_process.c \
+	   pipex_free_error.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = ./libft
