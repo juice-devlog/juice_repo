@@ -12,9 +12,9 @@
 
 #include "pipex.h"
 
-void free_cmd(t_cmd *cmd)
+void	free_cmd(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (cmd->cmd1[i++])
@@ -34,7 +34,7 @@ int	print_error_msg(char *msg)
 	return (1);
 }
 
-void	handle_error(char *msg)
+void	print_system_error(char *msg)
 {
 	perror(msg);
 	exit(1);
@@ -43,5 +43,5 @@ void	handle_error(char *msg)
 void	handle_process_error(t_cmd *cmd, char *msg)
 {
 	free_cmd(cmd);
-	handle_error(msg);
+	print_system_error(msg);
 }

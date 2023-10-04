@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/04 20:40:43 by jooypark          #+#    #+#             */
+/*   Updated: 2023/10/04 20:40:43 by jooypark         ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -22,12 +34,12 @@ char	*find_path(char **cmd, char **paths);
 void	parse_env(char **av, char **envp, t_cmd *info);
 void	pipex(int infile, int outfile, t_cmd *info, char **envp);
 
-void first_child_process(int infile, int *fd, t_cmd *cmd, char **envp);
-void second_child_process(int outfile, int *fd, t_cmd *cmd, char **envp);
+void	first_child_process(int infile, int *fd, t_cmd *cmd, char **envp);
+void	second_child_process(int outfile, int *fd, t_cmd *cmd, char **envp);
 
-void free_cmd(t_cmd *cmd);
-int print_error_msg(char *msg);
-void handle_error(char *msg);
-void handle_process_error(t_cmd *cmd, char *msg);
+void	free_cmd(t_cmd *cmd);
+int		print_error_msg(char *msg);
+void	print_system_error(char *msg);
+void	handle_process_error(t_cmd *cmd, char *msg);
 
 #endif

@@ -27,7 +27,7 @@ void	first_child_process(int infile, int *fd, t_cmd *cmd, char **envp)
 		handle_process_error(cmd, "EXECUTE ERROR");
 }
 
-void second_child_process(int outfile, int *fd, t_cmd *cmd, char **envp)
+void	second_child_process(int outfile, int *fd, t_cmd *cmd, char **envp)
 {
 	close(fd[1]);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
