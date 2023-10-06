@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 16:29:40 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/06 22:07:04 by jooypark         ###   ########seoul.kr  */
+/*   Created: 2023/03/22 18:02:18 by jooypark          #+#    #+#             */
+/*   Updated: 2023/07/12 17:16:56 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-
-# define T_CMD 0
-# define T_PIPE 1
-# define T_REDIR 2
-# define T_NONE 3
-
-typedef struct s_token
+char	*ft_strchr(const char *s, int c)
 {
-	int		type;
 	char	*str;
-}	t_token;
+	int		str_len;
+	int		i;
 
-typedef struct s_list
-{
-	t_token			*token;
-	struct s_list	*next;
-}	t_list;
-
-#endif
+	str = (char *)s;
+	str_len = ft_strlen(str);
+	i = 0;
+	while (i <= str_len)
+	{
+		if (str[i] == (unsigned char)c)
+		{
+			return (&str[i]);
+		}
+		i++;
+	}
+	return (0);
+}

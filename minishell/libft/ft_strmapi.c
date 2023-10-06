@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 16:29:40 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/06 22:07:04 by jooypark         ###   ########seoul.kr  */
+/*   Created: 2023/03/31 17:57:59 by jooypark          #+#    #+#             */
+/*   Updated: 2023/04/09 18:35:16 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-
-# define T_CMD 0
-# define T_PIPE 1
-# define T_REDIR 2
-# define T_NONE 3
-
-typedef struct s_token
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		type;
-	char	*str;
-}	t_token;
+	char				*result;
+	unsigned int		s_len;
+	unsigned int		idx;
 
-typedef struct s_list
-{
-	t_token			*token;
-	struct s_list	*next;
-}	t_list;
-
-#endif
+	s_len = ft_strlen(s);
+	result = (char *)malloc((s_len + 1) * sizeof(char));
+	if (!result)
+		return (0);
+	idx = 0;
+	while (idx < s_len)
+	{
+		result[idx] = (*f)(idx, s[idx]);
+		idx++;
+	}
+	result[idx] = 0;
+	return (result);
+}

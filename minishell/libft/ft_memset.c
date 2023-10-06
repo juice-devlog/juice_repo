@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 16:29:40 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/06 22:07:04 by jooypark         ###   ########seoul.kr  */
+/*   Created: 2023/03/18 15:03:30 by jooypark          #+#    #+#             */
+/*   Updated: 2023/04/09 18:32:44 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-
-# define T_CMD 0
-# define T_PIPE 1
-# define T_REDIR 2
-# define T_NONE 3
-
-typedef struct s_token
+void	*ft_memset(void *b, int c, size_t n)
 {
-	int		type;
-	char	*str;
-}	t_token;
+	unsigned char	*ptr;
+	size_t			i;
 
-typedef struct s_list
-{
-	t_token			*token;
-	struct s_list	*next;
-}	t_list;
-
-#endif
+	i = 0;
+	ptr = (unsigned char *)b;
+	while (i < n)
+	{
+		ptr[i] = (unsigned char)c;
+		i++;
+	}
+	return ((void *)b);
+}

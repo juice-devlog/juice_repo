@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 16:29:40 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/06 22:07:04 by jooypark         ###   ########seoul.kr  */
+/*   Created: 2023/03/22 20:22:54 by jooypark          #+#    #+#             */
+/*   Updated: 2023/05/15 17:15:53 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
-
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-
-# define T_CMD 0
-# define T_PIPE 1
-# define T_REDIR 2
-# define T_NONE 3
-
-typedef struct s_token
+int	ft_atoi(const char *str)
 {
-	int		type;
-	char	*str;
-}	t_token;
+	long long	sign;
+	long long	result;
 
-typedef struct s_list
-{
-	t_token			*token;
-	struct s_list	*next;
-}	t_list;
-
-#endif
+	sign = 1;
+	result = 0;
+	while (*str && ((9 <= *str && *str <= 13) || *str == 32))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str++;
+	}
+	while (*str && ('0' <= *str && *str <= '9'))
+	{
+		result = (result * 10) + (*str - '0');
+		str++;
+	}
+	return ((int)(sign * result));
+}

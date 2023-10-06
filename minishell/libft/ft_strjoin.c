@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 16:29:40 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/06 22:07:04 by jooypark         ###   ########seoul.kr  */
+/*   Created: 2023/03/23 19:53:37 by jooypark          #+#    #+#             */
+/*   Updated: 2023/04/09 18:34:18 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-
-# define T_CMD 0
-# define T_PIPE 1
-# define T_REDIR 2
-# define T_NONE 3
-
-typedef struct s_token
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		type;
-	char	*str;
-}	t_token;
+	char	*s;
+	size_t	s_len;
+	int		i;
 
-typedef struct s_list
-{
-	t_token			*token;
-	struct s_list	*next;
-}	t_list;
-
-#endif
+	s_len = ft_strlen(s1) + ft_strlen(s2);
+	s = (char *)malloc((s_len + 1) * sizeof(char));
+	if (!s)
+		return (0);
+	i = 0;
+	while (*s1)
+	{
+		s[i++] = *s1;
+		s1++;
+	}
+	while (*s2)
+	{
+		s[i++] = *s2;
+		s2++;
+	}
+	s[i] = 0;
+	return (s);
+}
