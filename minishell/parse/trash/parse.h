@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 16:29:40 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/09 22:58:28 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/10/09 22:58:56 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
 
 # define T_NONE 0
 # define T_ARG 1
@@ -36,11 +35,5 @@ typedef struct s_token
 	char			*str;
 	struct s_token	*next;
 }	t_token;
-
-char	**ft_free2(char **str);
-int		is_special_symbol(char c);
-int		count_cmd_line(char *s);
-char	*put_cmd_line(char *s);
-char	**split_process(char *line);
 
 #endif

@@ -1,7 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = ./parse/parse.c
+SRCS = ./parse/parse.c \
+	   ./parse/split_process.c \
+	   ./parse/free.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = ./libft
