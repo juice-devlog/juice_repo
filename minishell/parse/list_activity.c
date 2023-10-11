@@ -1,4 +1,4 @@
-#include "parse.c"
+#include "parse.h"
 
 void	free_token(t_token *token)
 {

@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 16:29:40 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/09 22:58:28 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/10/11 21:35:31 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,10 @@
 # define T_NONE 0
 # define T_ARG 1
 # define T_PIPE 2
-# define T_LEFT_REDIR 3
-# define T_RIGHT_REDIR 4
-# define T_LEFT_DREDIR 5
-# define T_RIGHT_DREDIR 6
-# define T_AMPERSAND 7
-# define T_COLON 8
-# define T_SEP 9
+# define T_REDIR 3
+# define T_LIMITER 4
+# define T_SQUOTE 5
+# define T_DQUOTE 6
 
 typedef struct s_token
 {
@@ -37,10 +34,11 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-char	**ft_free2(char **str);
-int		is_special_symbol(char c);
-int		count_cmd_line(char *s);
-char	*put_cmd_line(char *s);
-char	**split_process(char *line);
+void	parse_heredoc_limiter(t_token *token);
+void	tokenize(t_token *token, char *line, char **envp);
+int	check_quote(char *cmd_line);
+char	*create_new_str(char *target, int start, int end);
+void	parse_quote(t_token *token);
+void	insert(t_token *prev_token, char *new_str, int new_type);
 
 #endif

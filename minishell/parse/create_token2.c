@@ -51,70 +51,112 @@ char	*create_new_str(char *s, int n)
 	return (new);
 }
 
-t_token	*add_new_token(t_token *prev_token, char *new_str, int new_type)
+void	free_token(t_token *token)
+{
+	free(token->str);
+	free(token);
+}
+
+void	insert(t_token *prev_token, char *new_str, int new_type)
 {
 	t_token	*new_token;
 
 	new_token = (t_token *)malloc(sizeof(t_token));
 	new_token->str = new_str;
 	new_token->type = new_type;
-	if (prev_token == NULL)
-		new_token->next = NULL;
-	else
-	{
-		new_token->next = prev_token->next;
-		prev_token->next = new_token;
-	}
+	new_token->next = prev_token->next;
+	prev_token->next = new_token;
+}
+
+t_token *add_first(t_token *head, char *new_str, int new_type)
+{
+	t_token	*new_token;
+
+	new_token = (t_token *)malloc(sizeof(t_token));
+	new_token->str = new_str;
+	new_token->type = new_type;
+	new_token->next = head;
+	head = new_token;
 	return (new_token);
 }
 
-// void	parse_quote(t_token *token)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*new_str;
+void	add_last(t_token *head, char *new_str, int new_type)
+{
+	t_token	*new_token;
 
-// 	while (token)
-// 	{
-// 		if (check_quote(token->str) && token->type == T_NONE)
-// 		{
-// 			i = 0;
-// 			while (token->str[i])
-// 			{
-// 				if (token->str[i] == '\'' || token->str[i] == '"')
-// 				{
-// 					j = i + 1;
-// 					while (token->str[j] != token->str[i])
-// 						j++;
-// 					new_str = create_new_str(&(token->str[i + 1]), j - i - 1);
-// 					if (token->str[i] == '\'')
-// 						add_new_token(token, new_str, T_ARG);
-// 					else
-// 						add_new_token(token, new_str, T_NONE);
-// 					i = j;
-// 				}
-// 				i++;
-// 			}
-// 		}
-// 		token = token->next;
-// 	}
-// }
+	new_token = (t_token *)malloc(sizeof(t_token));
+	new_token->str = new_str;
+	new_token->type = new_type;
+	while (head->next)
+		head = head->next;
+	head->next = new_token;
+	new_token->next = NULL;
+}
+
+void	delete_first(t_token *head)
+{
+	t_token *new_head;
+
+	new_head = head->next;
+	head->next = NULL;
+	head = new_head;
+}
+
+void	delete(t_token *prev_token)
+{
+	t_token	*delete_token;
+
+	delete_token = prev_token->next;
+	prev_token->next = delete_token->next;
+}
+
+void	parse_quote(t_token *token)
+{
+	int		i;
+	int		j;
+	char	*new_str;
+
+	while (token)
+	{
+		if (check_quote(token->str) && token->type == T_NONE)
+		{
+			i = 0;
+			while (token->str[i])
+			{
+				if (token->str[i] == '\'' || token->str[i] == '"')
+				{
+					j = i + 1;
+					while (token->str[j] != token->str[i])
+						j++;
+					new_str = create_new_str(&(token->str[i + 1]), j - i - 1);
+					if (token->str[i] == '\'')
+						add_new_token(token, new_str, T_ARG);
+					else
+						add_new_token(token, new_str, T_NONE);
+					i = j;
+				}
+				i++;
+			}
+		}
+		token = token->next;
+	}
+}
 
 int main()
 {
 	t_token *token;
-	t_token *backup;
-	
+
 	token = (t_token *)malloc(sizeof(t_token));
-	token->
-	token = add_new_token(NULL, "hi", T_ARG);
-	backup = token;
-	token = token->next;
-	add_new_token(token, "hello", T_NONE);
-	add_new_token(token, "good", T_ARG);
-	while (backup)
+	token->str = "first";
+	token->type = T_NONE;
+	token->next = NULL;
+	token = add_first(token, "hi", T_ARG);
+	insert(token, "hello", T_NONE);
+	add_last(token, "good", T_ARG);
+	delete_first(token);
+	while (token)
 	{
-		printf("%s, %d\n", backup->str, backup->type);
-		backup = backup->next;
+		printf("%s, %d\n", token->str, token->type);
+		token = token->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:18:56 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/09 23:05:58 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/10/11 16:19:11 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ char	**split_process(char *line)
 	{
 		if (*line && (is_special_symbol(*line) != T_NONE))
 		{
-			add_last(token, put_cmd_line(line, is_special_symbol(*line), is_special_symbol(*line)))
+			cmd_line[i] = put_cmd_line(line, is_special_symbol(*line));
+			// if (cmd_line[i] == 0)
+			// 	return (ft_free2(cmd_line));
 			i++;
 		}
 		while (*line && (is_special_symbol(*line) != T_NONE))
