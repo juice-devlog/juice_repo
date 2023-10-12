@@ -1,16 +1,12 @@
 #include "parse.h"
 
-void	tokenize(t_token *token, char *line, char **envp)
+void	tokenize(t_process *process, char *line, char **envp)
 {
-	envp = NULL;
-	token->str = line;
-	token->type = T_NONE;
-	token->next = NULL;
-	parse_heredoc_limiter(token);
-	parse_quote(token);
-	// parse_env(token, envp);
-	// parse_blank(token);
-	// parse_pipe(token);
-	// parse_redirection(token);
-	// parse_etc(token);
+	parse_heredoc_limiter(process);
+	parse_quote(process);
+	// parse_env(process, envp);
+	// parse_blank(process);
+	// parse_pipe(process);
+	// parse_redirection(process);
+	// parse_etc(process);
 }

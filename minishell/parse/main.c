@@ -6,25 +6,27 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:43:33 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/11 19:57:13 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/10/12 19:39:42 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-void	print_token_list(t_token *token)
+void	print_process_list(t_process *process)
 {
-	while (token)
+	while (process)
 	{
-		printf("str: %s, type: %d\n", token->str, token->type);
-		token = token->next;
+		int i = 0;
+		while (process->cmd[i])
+			printf("str: %s\n", process->cmd[i++]);
+		process = process->next;
 	}
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	char	*line;
-	t_token	token;
+	char		*line;
+	t_process	process;
 
 	ac = 0;
 	av = NULL;
@@ -32,8 +34,8 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		line = readline("minishell$ ");
-		tokenize(&token, line, envp);
-		print_token_list(&token);
+		tokenize(&process, line, envp);
+		print_process_list(&process);
 		free(line);
 	}
 }

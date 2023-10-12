@@ -49,15 +49,17 @@ t_token *split_by_quote(t_token *token, char *target)
 			while (target[end] != target[i])
 				end++;
 			if (target[i] == '\'')
-				insert(token, create_new_str(target, i, end), T_SQUOTE);
+				printf("%s\n", create_new_str(target, i, end));
+				//insert(token, create_new_str(target, i, end), T_SQUOTE);
 			else
-				insert(token, create_new_str(target, i, end), T_DQUOTE);
+				printf("%s\n", create_new_str(target, i, end));
+				//insert(token, create_new_str(target, i, end), T_DQUOTE);
 			i = end;
-			token = token->next;
+			//token = token->next;
 		}
 		i++;
 	}
-	return (token);
+	return (token->next);
 }
 
 void	parse_quote(t_token *token)
@@ -67,6 +69,8 @@ void	parse_quote(t_token *token)
 		printf("%s\n", token->str);
 		if (check_quote(token->str) && token->type == T_NONE)
 			token = split_by_quote(token, token->str);
+		else if (check_quote(token->str) && token->type != T_NONE)
+			token = token->next;
 		else if (!check_quote(token->str))
 			exit(1);
 	}

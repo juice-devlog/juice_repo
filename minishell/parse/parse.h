@@ -6,7 +6,7 @@
 /*   By: jooypark <jooypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 16:29:40 by jooypark          #+#    #+#             */
-/*   Updated: 2023/10/11 21:35:31 by jooypark         ###   ########seoul.kr  */
+/*   Updated: 2023/10/12 19:36:25 by jooypark         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,25 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-# define T_NONE 0
-# define T_ARG 1
-# define T_PIPE 2
-# define T_REDIR 3
-# define T_LIMITER 4
-# define T_SQUOTE 5
-# define T_DQUOTE 6
+# define T_SIMPLE 0
+# define T_PIPE 1
+# define T_REDIR_INPUT 2
+# define T_REDIR_OUTPUT 3
+# define T_REDIR_HEREDOC 4
+# define T_REDIR_APPEND 5
 
-typedef struct s_token
+typedef struct s_redir
 {
 	int				type;
-	char			*str;
-	struct s_token	*next;
-}	t_token;
+	char			*file;
+	struct s_redir	*next;
+}	t_redir;
 
-void	parse_heredoc_limiter(t_token *token);
-void	tokenize(t_token *token, char *line, char **envp);
-int	check_quote(char *cmd_line);
-char	*create_new_str(char *target, int start, int end);
-void	parse_quote(t_token *token);
-void	insert(t_token *prev_token, char *new_str, int new_type);
+typedef struct s_process
+{
+	t_redir			*redir;
+	char			**cmd;
+	struct s_token	*next;
+}	t_process;
 
 #endif
